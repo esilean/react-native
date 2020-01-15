@@ -16,6 +16,7 @@ class Devs extends Model {
 
     static associate(models) {
         this.hasMany(models.Techs, { foreignKey: 'dev_id', as: 'techs' });
+        this.belongsToMany(models.Languages, { foreignKey: 'dev_id', through: 'devs_languages', as: 'languages'});
     }
 }
 

@@ -6,16 +6,20 @@ module.exports = {
         const devs = await Devs.findAll();
         return response.json(devs);
     },
+
     async store(request, response) {
         //const { name, github_username, bio, avatar_url } = request.body;
         const { github_username, longitude, latitude } = request.body;
+        //console.log(github_username);
 
-        let dev = await Devs.findOne({ github_username });
+        let dev = await Devs.findOne({ where: { github_username } });
 
         if (!dev) {
             const resp = await axios.get(`https://api.github.com/users/${github_username}`);
+            
             //console.log(resp.data);
-            const { name = login, bio, avatar_url } = resp.data;
+            let { name = login, bio, avatar_url } = resp.data;
+            bio = bio || "No bio";
 
             dev = await Devs.create({ name, github_username, bio, avatar_url, longitude, latitude });
         }

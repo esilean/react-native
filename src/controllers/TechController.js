@@ -33,7 +33,7 @@ module.exports = {
         var techsAssociated = [];
         for (var i = 0; i < techArray.length; i++) {
 
-            const techE = await Techs.findOne({ where: { tech: techArray[i] } });
+            const techE = await Techs.findOne({ where: { tech: techArray[i], dev_id: dev_id } });
             if (!techE) {
                 var techAss = {
                     dev_id,
